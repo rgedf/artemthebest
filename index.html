@@ -31,4 +31,157 @@ else:
 </button>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Поршневой насос</title>
 
+<style>
+body{
+font-family:Arial;
+background:#ececec;
+text-align:center;
+}
+
+svg{
+background:white;
+border:2px solid #555;
+margin-top:20px;
+}
+
+#info{
+font-size:22px;
+margin-top:20px;
+font-weight:bold;
+}
+
+input{
+width:500px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Поршневой насос</h2>
+
+<p>0 — поршень внизу. 100 — поршень вверху.</p>
+
+<input type="range" min="0" max="100" value="0" id="slider">
+
+<div id="info"></div>
+
+<svg width="450" height="600">
+
+<!-- цилиндр -->
+<rect x="160" y="70" width="120" height="420"
+fill="none"
+stroke="black"
+stroke-width="4"/>
+
+<!-- вода -->
+<rect id="waterBottom"
+x="164"
+y="250"
+width="112"
+height="236"
+fill="#4aa8ff"/>
+
+<rect id="waterTop"
+x="164"
+y="75"
+width="112"
+height="0"
+fill="#4aa8ff"/>
+
+<!-- поршень -->
+<rect id="piston"
+x="150"
+y="380"
+width="140"
+height="20"
+fill="gray"/>
+
+<!-- клапан поршня -->
+<circle id="pistonValve"
+cx="220"
+cy="390"
+r="8"
+fill="red"/>
+
+<!-- входной клапан -->
+<circle id="bottomValve"
+cx="220"
+cy="485"
+r="8"
+fill="red"/>
+
+<!-- труба -->
+<line x1="220" y1="70" x2="360" y2="70"
+stroke="black"
+stroke-width="6"/>
+
+<!-- стрелка -->
+<text id="arrow" x="365" y="80" font-size="40"></text>
+
+</svg>
+
+<script>
+
+let slider=document.getElementById("slider");
+
+slider.oninput=function(){
+
+let v=Number(slider.value);
+
+let pistonY=380-v*2.8;
+
+document.getElementById("piston").setAttribute("y",pistonY);
+
+document.getElementById("pistonValve").setAttribute("cy",pistonY+10);
+
+let bottomHeight=486-pistonY;
+
+document.getElementById("waterBottom")
+.setAttribute("y",pistonY+20);
+
+document.getElementById("waterBottom")
+.setAttribute("height",bottomHeight-20);
+
+document.getElementById("waterTop")
+.setAttribute("height",pistonY-75);
+
+if(v<50){
+
+document.getElementById("info").innerHTML=
+"⬇ Поршень опускается<br>✔ Клапан в поршне открыт<br>✖ Нижний клапан закрыт<br>Вода проходит НАД поршень";
+
+document.getElementById("pistonValve").setAttribute("fill","lime");
+
+document.getElementById("bottomValve").setAttribute("fill","red");
+
+document.getElementById("arrow").innerHTML="";
+
+}else{
+
+document.getElementById("info").innerHTML=
+"⬆ Поршень поднимается<br>✔ Нижний клапан открыт<br>✖ Клапан в поршне закрыт<br>Вода выталкивается в трубу";
+
+document.getElementById("pistonValve").setAttribute("fill","red");
+
+document.getElementById("bottomValve").setAttribute("fill","lime");
+
+document.getElementById("arrow").innerHTML="➡";
+
+}
+
+}
+
+slider.oninput();
+
+</script>
+
+</body>
+</html>
