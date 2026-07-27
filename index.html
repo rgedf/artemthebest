@@ -183,6 +183,17 @@ document.getElementById("arrow").innerHTML="➡";
 
 slider.oninput();
 
+        let a = Number(prompt("Введите число:"));
+
+        if (a > 10) {
+            alert("Число больше 10");
+        } else if (a == 10) {
+            alert("Число равно 10");
+        } else {
+            alert("Число меньше 10");
+        }
+
+        document.write("<p>Вы ввели число: " + a + "</p>");
 </script>
 
 </body>
